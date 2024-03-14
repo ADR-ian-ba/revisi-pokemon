@@ -10,7 +10,7 @@ const RevisedHome = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
+      const response = await axios.get(import.meta.env.VITE_BASE_URL);
       const { results } = response.data;
       const pokemonExtractId: IPokemon[] = results.map((pokemon: any) => {
         const id = pokemon.url.replace(/\/+$/, "").split("/").pop() 
