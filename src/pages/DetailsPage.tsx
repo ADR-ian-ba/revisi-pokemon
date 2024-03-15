@@ -94,7 +94,7 @@ const DetailsPage = () => {
 
 
             </Card>
-              <Link to='/' style={{paddingBottom: "5rem"}}>Back</Link>
+              <Link to='/' style={{paddingBottom: "5rem", color:"#000", textDecoration:"none"}}>Back</Link>
         </div>
     );
 };

@@ -23,7 +23,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <Typography
-        sx={{ margin: '0 auto', marginBottom: '1rem', width: 'fit-content' }}
+        sx={{ margin: '2rem auto', marginBottom:"0", width: 'fit-content' }}
         variant="h4"
       >
         List Pokemon
