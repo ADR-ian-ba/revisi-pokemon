@@ -57,12 +57,8 @@ const RevisedHome = () => {
       const detailedPokemon = await Promise.all(promises);
       setPokemon(detailedPokemon);
     };
->>>>>>> parent of 9fcd866 (fix inf fetch)
-
-    if (pokemon.length > 0) {
-      fetchPokemonDetails();
-    }
-  }, [pokemon]);
+    fetchData();
+  }, []);
 
   const redirect = (each: IPokemon) => {
     navigate(`/details?id=${each.id}`);
