@@ -1,30 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Card, CardMedia, Typography } from '@mui/material';
-import IPokemon from '../interfaces/IPokemon';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { fetchData } from '../Repository/RemoteRepository';
+import { IPokemon } from '../Repository/interfaces';
 
 const HomePage = () => {
   const [pokemon, setPokemon] = useState<IPokemon[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/")
-      const { results } = response.data
-      const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
-        const id = pokemon.url.replace(/\/+$/, "").split("/").pop()
-        const pokemonResponse = await axios.get(pokemon.url)
-        const { data } = pokemonResponse
-        return {
-          ...pokemon,
-          id,
-          image: data.sprites.other['official-artwork'].front_default,
-        }
-      }))
-      setPokemon(pokemonWithDetails)
-    };
-    fetchData()
+      const fetchPokemon = async () =>{
+        const res = await fetchData()
+        setPokemon(res)
+      }
+      fetchPokemon()
   }, []);
 
   const redirect = (each: IPokemon) => {
@@ -54,43 +43,42 @@ const HomePage = () => {
           paddingBottom:'10rem'
         }}
       >
-{pokemon.map((each, index) => (
-  <div
-    key={index}
-    className="card-wrapper"
-    style={{
-      maxWidth: '30rem',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '.5rem',
-      marginBottom: '1rem', 
-    }}
-  >
-    <Card variant="outlined">
-      <CardMedia
-        component="img"
-        height="200" 
-        image={each.image}
-        alt={each.name} 
-      />
-    </Card>
-    <Card
-      onClick={() => redirect(each)}
-      variant="outlined"
-      sx={{
-        height: '2rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-      }}
-    >
-      {each.name}
-    </Card>
-  </div>
-))}
+        {pokemon.map((each, index) => (
+          <div
+            key={index}
+            className="card-wrapper"
+            style={{
+              maxWidth: '30rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '.5rem',
+              marginBottom: '1rem', 
+            }}
+          >
+            <Card variant="outlined">
+              <CardMedia
+                component="img"
+                height="200" 
+                image={each.image}
+                alt={each.name} 
+              />
+            </Card>
+            <Card
+              onClick={() => redirect(each)}
+              variant="outlined"
+              sx={{
+                height: '2rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              {each.name}
+            </Card>
+          </div>
+        ))}
       </div>
-        {/* <button onClick={()=> console.log(pokemon)}>test</button> */}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { Card, CardContent, Typography,} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import IPokemonDetail from '../interfaces/IPokemonDetail';
+import { fetchDataId } from '../Repository/RemoteRepository';
+import { IPokemonDetail } from '../Repository/interfaces';
 
 const DetailsPage = () => {
     const [pokemonDetails, setPokemonDetails] = useState<IPokemonDetail | null>(null);    
@@ -10,25 +10,12 @@ const DetailsPage = () => {
     const id = params.get('id');
 
     useEffect(()=>{
-      const fetchData = async ()=> {
-        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        const moves = res.data.moves.map((each:any)=>({
-          name: each.move.name
-        }))
-
-        const pokemonDetails: IPokemonDetail = {
-          name: res.data.name,
-          height: res.data.height,
-          weight: res.data.weight,
-          official: res.data.sprites.other['official-artwork'].front_default,
-          sprite: res.data.sprites.front_default,
-          move: moves, 
-        }
-        console.log(res)
-        setPokemonDetails(pokemonDetails)
+      const fetchPokemon = async ()=> {
+        const res = await fetchDataId(id!)
+        setPokemonDetails(res);
       }
 
-      fetchData()
+      fetchPokemon();
     }, [id])
 
     if (!pokemonDetails) {
@@ -77,7 +64,7 @@ const DetailsPage = () => {
                   <Typography variant="h5" className="p-details">Move : </Typography>
 
                   <div className="move-wrapper">
-                  {pokemonDetails.move.map((each:any, index:any) => (
+                  {pokemonDetails.move.map((each, index:number) => (
                     <Card 
                       key={index}
                       sx={{
@@ -107,7 +94,6 @@ const DetailsPage = () => {
 
 
             </Card>
-              {/* <button onClick={()=> console.log(move[0].name)}>tets</button> */}
               <Link to='/' style={{paddingBottom: "5rem"}}>Back</Link>
         </div>
     );

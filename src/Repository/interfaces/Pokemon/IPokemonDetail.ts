@@ -1,13 +1,11 @@
-interface Move {
-    name: string; 
-  }
+import IMove from "./IMove";
   
 export default interface IPokemonDetail {
-    id:string
+    id:string;
     name: string;
     height: number;
     weight: number;
     official: string;
     sprite: string;
-    move: Move[]
+    move: IMove[]
   }
