@@ -25,7 +25,6 @@ const DetailsPage = () => {
           sprite: res.data.sprites.front_default,
           move: moves, 
         }
-        console.log(res)
         setPokemonDetails(pokemonDetails)
       }
 
@@ -108,8 +107,7 @@ const DetailsPage = () => {
 
 
             </Card>
-              {/* <button onClick={()=> console.log(move[0].name)}>tets</button> */}
-              <Link to='/' style={{paddingBottom: "5rem"}}>Back</Link>
+              <Link to='/' style={{paddingBottom: "5rem", textDecoration:"none", color:"#fff"}}>Back</Link>
         </div>
     );
 };
