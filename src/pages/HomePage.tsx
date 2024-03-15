@@ -10,25 +10,25 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
-      const { results } = response.data;
+      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/")
+      const { results } = response.data
       const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
-        const id = pokemon.url.replace(/\/+$/, "").split("/").pop();
-        const pokemonResponse = await axios.get(pokemon.url);
-        const { data } = pokemonResponse;
+        const id = pokemon.url.replace(/\/+$/, "").split("/").pop()
+        const pokemonResponse = await axios.get(pokemon.url)
+        const { data } = pokemonResponse
         return {
           ...pokemon,
           id,
           image: data.sprites.other['official-artwork'].front_default,
-        };
-      }));
-      setPokemon(pokemonWithDetails);
+        }
+      }))
+      setPokemon(pokemonWithDetails)
     };
-    fetchData();
+    fetchData()
   }, []);
 
   const redirect = (each: IPokemon) => {
-    navigate(`/details?id=${each.id}`);
+    navigate(`/details?id=${each.id}`)
   };
 
   return (
