@@ -4,51 +4,32 @@ import IPokemon from '../interfaces/IPokemon';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const RevisedHome = () => {
-  const [pokemon, setPokemon] = useState<IPokemon[]>([])
-  const navigate = useNavigate()
+const HomePage = () => {
+  const [pokemon, setPokemon] = useState<IPokemon[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
       const { results } = response.data;
-      const pokemonExtractId: IPokemon[] = results.map((pokemon: any) => {
-        const id = pokemon.url.replace(/\/+$/, "").split("/").pop() 
+      const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
+        const id = pokemon.url.replace(/\/+$/, "").split("/").pop();
+        const pokemonResponse = await axios.get(pokemon.url);
+        const { data } = pokemonResponse;
         return {
           ...pokemon,
           id,
-        }
-      })
-      setPokemon(pokemonExtractId);
+          image: data.sprites.other['official-artwork'].front_default,
+        };
+      }));
+      setPokemon(pokemonWithDetails);
     };
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    const fetchPokemonDetails = async () => {
-      const promises = pokemon.map(pokemon =>
-        axios.get(pokemon.url).then(response => {
-          const { data } = response;
-          return {
-            ...pokemon, 
-            image: data.sprites.other['official-artwork'].front_default,
-          };
-        })
-      );
-
-      const detailedPokemon = await Promise.all(promises);
-      setPokemon(detailedPokemon);
-    };
-
-    if (pokemon.length > 0) {
-      fetchPokemonDetails();
-    }
-  }, [pokemon]);
+    fetchData();
+  }, []);
 
   const redirect = (each: IPokemon) => {
     navigate(`/details?id=${each.id}`);
   };
-
 
   return (
     <div className="home-page">
@@ -109,9 +90,9 @@ const RevisedHome = () => {
   </div>
 ))}
       </div>
-        <button onClick={()=> console.log(pokemon)}>test</button>
+        {/* <button onClick={()=> console.log(pokemon)}>test</button> */}
     </div>
   );
 };
 
-export default RevisedHome;
+export default HomePage;
