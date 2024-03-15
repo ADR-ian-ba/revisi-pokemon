@@ -38,6 +38,27 @@ const RevisedHome = () => {
         }
       })
       setPokemon(pokemonExtractId);
+<<<<<<< HEAD
+    };
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const fetchPokemonDetails = async () => {
+      const promises = pokemon.map(pokemon =>
+        axios.get(pokemon.url).then(response => {
+          const { data } = response;
+          return {
+            ...pokemon, 
+            image: data.sprites.other['official-artwork'].front_default,
+          };
+        })
+      );
+
+      const detailedPokemon = await Promise.all(promises);
+      setPokemon(detailedPokemon);
+=======
+>>>>>>> parent of 9fcd866 (fix inf fetch)
     };
     fetchData()
   }, [])
@@ -57,8 +78,11 @@ const RevisedHome = () => {
       const detailedPokemon = await Promise.all(promises);
       setPokemon(detailedPokemon);
     };
-    fetchData();
-  }, []);
+
+    if (pokemon.length > 0) {
+      fetchPokemonDetails();
+    }
+  }, [pokemon]);
 
   const redirect = (each: IPokemon) => {
     navigate(`/details?id=${each.id}`);
