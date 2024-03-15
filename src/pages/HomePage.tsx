@@ -1,4 +1,63 @@
+import { useEffect, useState } from 'react';
+import { Card, CardMedia, Typography } from '@mui/material';
+import IPokemon from '../interfaces/IPokemon';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+<<<<<<< HEAD
+const RevisedHome = () => {
+  const [pokemon, setPokemon] = useState<IPokemon[]>([])
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchData = async () => {
+
+
+  useEffect(() => {
+    const fetchPokemonDetails = async () => {
+      const promises = pokemon.map(pokemon =>
+        axios.get(pokemon.url).then(response => {
+          const { data } = response;
+          return {
+            ...pokemon, 
+            image: data.sprites.other['official-artwork'].front_default,
+          };
+        })
+      );
+
+      const detailedPokemon = await Promise.all(promises);
+      setPokemon(detailedPokemon);
+    };
+
+      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
+      const { results } = response.data;
+      const pokemonExtractId: IPokemon[] = results.map((pokemon: any) => {
+        const id = pokemon.url.replace(/\/+$/, "").split("/").pop() 
+=======
+
+const HomePage = () => {
+  const [pokemon, setPokemon] = useState<IPokemon[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/")
+      const { results } = response.data
+      const pokemonWithDetails = await Promise.all(results.map(async (pokemon:any) => {
+        const id = pokemon.url.replace(/\/+$/, "").split("/").pop()
+        const pokemonResponse = await axios.get(pokemon.url)
+        const { data } = pokemonResponse
+>>>>>>> test
+        return {
+          ...pokemon,
+          id,
+        }
+      })
+      setPokemon(pokemonExtractId);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 9fcd866 (fix inf fetch)
     };
     fetchData()
   }, [])
