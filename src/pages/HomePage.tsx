@@ -11,6 +11,7 @@ const RevisedHome = () => {
   useEffect(() => {
     const fetchData = async () => {
 
+
   useEffect(() => {
     const fetchPokemonDetails = async () => {
       const promises = pokemon.map(pokemon =>
@@ -26,6 +27,37 @@ const RevisedHome = () => {
       const detailedPokemon = await Promise.all(promises);
       setPokemon(detailedPokemon);
     };
+
+      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
+      const { results } = response.data;
+      const pokemonExtractId: IPokemon[] = results.map((pokemon: any) => {
+        const id = pokemon.url.replace(/\/+$/, "").split("/").pop() 
+        return {
+          ...pokemon,
+          id,
+        }
+      })
+      setPokemon(pokemonExtractId);
+    };
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const fetchPokemonDetails = async () => {
+      const promises = pokemon.map(pokemon =>
+        axios.get(pokemon.url).then(response => {
+          const { data } = response;
+          return {
+            ...pokemon, 
+            image: data.sprites.other['official-artwork'].front_default,
+          };
+        })
+      );
+
+      const detailedPokemon = await Promise.all(promises);
+      setPokemon(detailedPokemon);
+    };
+>>>>>>> parent of 9fcd866 (fix inf fetch)
 
     if (pokemon.length > 0) {
       fetchPokemonDetails();
