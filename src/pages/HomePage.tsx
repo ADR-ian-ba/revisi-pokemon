@@ -4,6 +4,7 @@ import IPokemon from '../interfaces/IPokemon';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
 const HomePage = () => {
   const [pokemon, setPokemon] = useState<IPokemon[]>([]);
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const HomePage = () => {
     const fetchData = async () => {
       const response = await axios.get("https://pokeapi.co/api/v2/pokemon/")
       const { results } = response.data
-      const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
+      const pokemonWithDetails = await Promise.all(results.map(async (pokemon:any) => {
         const id = pokemon.url.replace(/\/+$/, "").split("/").pop()
         const pokemonResponse = await axios.get(pokemon.url)
         const { data } = pokemonResponse
@@ -90,7 +91,6 @@ const HomePage = () => {
   </div>
 ))}
       </div>
-        {/* <button onClick={()=> console.log(pokemon)}>test</button> */}
     </div>
   );
 };
