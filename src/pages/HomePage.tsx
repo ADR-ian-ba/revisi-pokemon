@@ -4,48 +4,48 @@ import IPokemon from '../interfaces/IPokemon';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const HomePage = () => {
-  const [pokemon, setPokemon] = useState<IPokemon[]>([]);
-  const navigate = useNavigate();
+const RevisedHome = () => {
+  const [pokemon, setPokemon] = useState<IPokemon[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-      const response = await axios.get(import.meta.env.VITE_BASE_URL);
-      const { results } = response.data;
-      const pokemonExtractId: IPokemon[] = results.map((pokemon: any) => {
-        const id = pokemon.url.replace(/\/+$/, "").split("/").pop() 
-=======
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/")
-      const { results } = response.data
-      const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
-        const id = pokemon.url.replace(/\/+$/, "").split("/").pop()
-        const pokemonResponse = await axios.get(pokemon.url)
-        const { data } = pokemonResponse
->>>>>>> 398630d70c9757dc6e19d33da82b043732b29406
-=======
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
-      const { results } = response.data;
-      const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
-        const id = pokemon.url.replace(/\/+$/, "").split("/").pop();
-        const pokemonResponse = await axios.get(pokemon.url);
-        const { data } = pokemonResponse;
->>>>>>> parent of ea423ab (pretty)
+
         return {
           ...pokemon,
           id,
-          image: data.sprites.other['official-artwork'].front_default,
-        };
-      }));
-      setPokemon(pokemonWithDetails);
+        }
+      })
+      setPokemon(pokemonExtractId);
     };
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const fetchPokemonDetails = async () => {
+      const promises = pokemon.map(pokemon =>
+        axios.get(pokemon.url).then(response => {
+          const { data } = response;
+          return {
+            ...pokemon, 
+            image: data.sprites.other['official-artwork'].front_default,
+          };
+        })
+      );
+
+      const detailedPokemon = await Promise.all(promises);
+      setPokemon(detailedPokemon);
+    };
+
+    if (pokemon.length > 0) {
+      fetchPokemonDetails();
+    }
+  }, [pokemon]);
 
   const redirect = (each: IPokemon) => {
     navigate(`/details?id=${each.id}`);
   };
+
 
   return (
     <div className="home-page">
@@ -106,9 +106,9 @@ const HomePage = () => {
   </div>
 ))}
       </div>
-        {/* <button onClick={()=> console.log(pokemon)}>test</button> */}
+        <button onClick={()=> console.log(pokemon)}>test</button>
     </div>
   );
 };
 
-export default HomePage;
+export default RevisedHome;
