@@ -11,16 +11,6 @@ const RevisedHome = () => {
   useEffect(() => {
     const fetchData = async () => {
 
-        return {
-          ...pokemon,
-          id,
-        }
-      })
-      setPokemon(pokemonExtractId);
-    };
-    fetchData()
-  }, [])
-
   useEffect(() => {
     const fetchPokemonDetails = async () => {
       const promises = pokemon.map(pokemon =>
