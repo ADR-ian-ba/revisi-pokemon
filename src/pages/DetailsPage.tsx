@@ -17,6 +17,7 @@ const DetailsPage = () => {
         }))
 
         const pokemonDetails: IPokemonDetail = {
+          id:id!,
           name: res.data.name,
           height: res.data.height,
           weight: res.data.weight,
@@ -29,7 +30,7 @@ const DetailsPage = () => {
       }
 
       fetchData()
-    })
+    },[id])
 
     if (!pokemonDetails) {
       return <Typography>Loading...</Typography>;
