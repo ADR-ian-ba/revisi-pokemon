@@ -11,6 +11,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
 <<<<<<< HEAD
+<<<<<<< HEAD
       const response = await axios.get(import.meta.env.VITE_BASE_URL);
       const { results } = response.data;
       const pokemonExtractId: IPokemon[] = results.map((pokemon: any) => {
@@ -23,19 +24,27 @@ const HomePage = () => {
         const pokemonResponse = await axios.get(pokemon.url)
         const { data } = pokemonResponse
 >>>>>>> 398630d70c9757dc6e19d33da82b043732b29406
+=======
+      const response = await axios.get("https://pokeapi.co/api/v2/pokemon/");
+      const { results } = response.data;
+      const pokemonWithDetails = await Promise.all(results.map(async (pokemon) => {
+        const id = pokemon.url.replace(/\/+$/, "").split("/").pop();
+        const pokemonResponse = await axios.get(pokemon.url);
+        const { data } = pokemonResponse;
+>>>>>>> parent of ea423ab (pretty)
         return {
           ...pokemon,
           id,
           image: data.sprites.other['official-artwork'].front_default,
-        }
-      }))
-      setPokemon(pokemonWithDetails)
+        };
+      }));
+      setPokemon(pokemonWithDetails);
     };
-    fetchData()
+    fetchData();
   }, []);
 
   const redirect = (each: IPokemon) => {
-    navigate(`/details?id=${each.id}`)
+    navigate(`/details?id=${each.id}`);
   };
 
   return (
