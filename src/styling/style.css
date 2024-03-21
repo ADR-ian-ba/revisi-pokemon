@@ -5,8 +5,8 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
   -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 #root {
@@ -28,7 +28,7 @@ body {
   min-width: 20rem;
   width: 100%;
   background-color: var(--white-color);
-  border: 2px solid #E9E9EA;
+  border: 2px solid #e9e9ea;
   border-radius: 10px;
   padding: 1rem;
   box-sizing: border-box;
@@ -86,7 +86,7 @@ body {
 .card-tilt .img-container img {
   width: 100%;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 .slider {
@@ -147,7 +147,8 @@ body {
   bottom: 0;
   left: 0;
 }
-.footer p, .footer svg {
+.footer p,
+.footer svg {
   display: inline;
   margin: 0;
 }
@@ -165,4 +166,4 @@ body {
   width: 100vw;
   height: 100vh;
   position: relative;
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */
