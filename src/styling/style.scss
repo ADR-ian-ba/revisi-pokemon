@@ -1,186 +1,180 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
-    user-select: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  user-select: none;
 }
 
-#root{
-    margin: 0;
-    padding: 0;
+#root {
+  margin: 0;
+  padding: 0;
 }
 
-:root{
-    --white-color: #ffffff;
-    --gray-color: gray;
-    --primary-color: rgb(24, 116, 255);
+:root {
+  --white-color: #ffffff;
+  --gray-color: gray;
+  --primary-color: rgb(24, 116, 255);
 }
 
-body{
-    overflow-x: hidden ;
+body {
+  overflow-x: hidden;
 }
 
-.card-tilt{
-    min-width: 20rem;
+.card-tilt {
+  min-width: 20rem;
+  width: 100%;
+  background-color: var(--white-color);
+  border: 2px solid #e9e9ea;
+  border-radius: 10px;
+  padding: 1rem;
+  box-sizing: border-box;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+
+  transition: 0.2s all cubic-bezier(0.47, 0.55, 0.8, 0.71);
+
+  perspective: 1000px;
+  display: inline-block;
+
+  h1 {
+    margin-bottom: 1rem;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .song-name {
     width: 100%;
-    background-color: var(--white-color);
-    border: 2px solid #E9E9EA;
-    border-radius: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .artist-name {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+  }
+
+  button {
+    display: block;
+    margin-left: auto;
+    padding: 0.7rem 1rem;
+    border-radius: 5px;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: transparent;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.1s linear;
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+
+    &:active {
+      filter: brightness(0.8);
+    }
+  }
+
+  .img-container {
+    width: 100%;
+    max-height: 17rem;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-bottom: 3rem;
+
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+.slider {
+  position: relative;
+  overflow-x: hidden;
+  .chevron {
+    width: 5rem;
+    margin: 1rem 2rem;
+    cursor: pointer;
     padding: 1rem;
-    box-sizing: border-box;
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: auto;
+    padding-top: 70vh;
+  }
 
-    transition: .2s all cubic-bezier(.47,.55,.8,.71);
-
-    perspective: 1000px;
-    display: inline-block;
-
-    h1{
-        margin-bottom: 1rem;
-        text-overflow: ellipsis;
-        text-wrap: nowrap;
-        overflow: hidden;
-    }
-
-    .song-name{
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        line-height: 1rem;
-        margin-bottom: 3rem;
-    }
-
-    .artist-name{
-        color: var(--gray-color);
-        font-size: .9rem;
-    }
-
-    button{
-        display: block;
-        margin-left: auto;
-        padding: .7rem 1rem;
-        border-radius: 5px;
-        border: 2px solid var(--primary-color);
-        color: var(--primary-color);
-        background-color: transparent;
-        font-weight: bold;
-        cursor: pointer;
-        transition: all .1s linear;
-
-        &:hover{
-            background-color: var(--primary-color);
-            color: var(--white-color);
-        }
-
-        &:active{
-            filter: brightness(.8);
-        }
-    }
-
-    .img-container{
-        width: 100%;
-        max-height: 17rem;
-        overflow: hidden;
-        border-radius: 5px;
-        margin-bottom: 3rem;
-
-        img{
-            width: 100%;
-            object-fit: contain;
-        }  
-    }
-
+  .card-wrapper {
+    width: 100%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 200ms cubic-bezier(0.47, 0.55, 0.57, 0.54);
+  }
 }
 
-.slider{
-    position: relative;
-    overflow-x: hidden;
-    .chevron{
-        width: 5rem;
-        margin : 1rem 2rem;
-        cursor: pointer;
-        padding: 1rem;
-        padding-top: 70vh;
-    }
-
-    .card-wrapper{
-        width: 100%;
-        display: flex;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transition: all 200ms cubic-bezier(.47,.55,.57,.54);
-    }
+.p-details {
+  text-align: left;
+  font-size: large;
 }
 
-.p-details{
-    text-align: left;
-    font-size: large;
-}
-
-.move-wrapper{
-    overflow-y: scroll;
-    max-height: 16.6rem;
-    padding: 1rem;
+.move-wrapper {
+  overflow-y: scroll;
+  max-height: 16.6rem;
+  padding: 1rem;
 }
 
 .move-wrapper::-webkit-scrollbar-track {
-    background-color: #f0f0f0; 
-  }
-  
-
-  .move-wrapper::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px; 
-    border: 3px solid #f0f0f0; 
-  }
-  
-  .move-wrapper::-webkit-scrollbar {
-    width: 8px; 
-  }
-
-
-  .footer {
-    background-color: var(--primary-color);
-    width: 100vw;
-    height: 3rem;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 1rem;
-    margin-top: 10rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-
-    p, svg {
-        display: inline;
-        margin: 0; 
-      }
-
-      svg{
-        height: 40px;
-      }
-  }
-
-
-.home-page{
-    width: 100vw;
-    overflow: none;
-    position: relative;
+  background-color: #f0f0f0;
 }
 
-.details-page{
-    width: 100vw;
-    height: 100vh;
-    position: relative;
+.move-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
 }
-  
 
-  
+.move-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.footer {
+  background-color: var(--primary-color);
+  width: 100vw;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 10rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  p,
+  svg {
+    display: inline;
+    margin: 0;
+  }
+
+  svg {
+    height: 40px;
+  }
+}
+
+.home-page {
+  width: 100vw;
+  overflow: none;
+  position: relative;
+}
+
+.details-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}

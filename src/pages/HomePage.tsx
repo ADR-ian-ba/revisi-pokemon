@@ -1,29 +1,25 @@
-import { useEffect, useState } from 'react';
-import { Card, CardMedia, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { fetchData } from '../Repository/RemoteRepository';
-import { IPokemon } from '../Repository/interfaces';
+import { useEffect, useState } from "react";
+import { Card, CardMedia, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { fetchPokemonList } from "../Repository/RemoteRepository";
+import { IPokemon } from "../Repository/interfaces";
 
 const HomePage = () => {
   const [pokemon, setPokemon] = useState<IPokemon[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-      const fetchPokemon = async () =>{
-        const res = await fetchData()
-        setPokemon(res)
-      }
-      fetchPokemon()
+    fetchPokemonList().then((res) => setPokemon(res));
   }, []);
 
   const redirect = (each: IPokemon) => {
-    navigate(`/details?id=${each.id}`)
+    navigate(`/details?id=${each.id}`);
   };
 
   return (
     <div className="home-page">
       <Typography
-        sx={{ margin: '2rem auto', marginBottom:"0", width: 'fit-content' }}
+        sx={{ margin: "2rem auto", marginBottom: "0", width: "fit-content" }}
         variant="h4"
       >
         List Pokemon
@@ -32,15 +28,15 @@ const HomePage = () => {
       <div
         className="cards-wrapper"
         style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '1rem',
-          margin: '0 auto',
-          width: '70vw',
-          padding: '2rem',
-          paddingBottom:'10rem'
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "1rem",
+          margin: "0 auto",
+          width: "70vw",
+          padding: "2rem",
+          paddingBottom: "10rem",
         }}
       >
         {pokemon.map((each, index) => (
@@ -48,30 +44,30 @@ const HomePage = () => {
             key={index}
             className="card-wrapper"
             style={{
-              maxWidth: '30rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '.5rem',
-              marginBottom: '1rem', 
+              maxWidth: "30rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: ".5rem",
+              marginBottom: "1rem",
             }}
           >
             <Card variant="outlined">
               <CardMedia
                 component="img"
-                height="200" 
+                height="200"
                 image={each.image}
-                alt={each.name} 
+                alt={each.name}
               />
             </Card>
             <Card
               onClick={() => redirect(each)}
               variant="outlined"
               sx={{
-                height: '2rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
+                height: "2rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
               }}
             >
               {each.name}

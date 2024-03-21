@@ -1,17 +1,14 @@
-import './App.css'
-import { Route, Routes } from 'react-router-dom'
-import { DetailsPage, HomePage } from './pages'
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import { DetailsPage, HomePage } from "./pages";
 
 function App() {
-
   return (
-  <Routes>
-
-    <Route path='/' element={<HomePage/>}/>
-    <Route path='/details' element={<DetailsPage/>}/>
-
-  </Routes>
-  )
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/details" element={<DetailsPage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
